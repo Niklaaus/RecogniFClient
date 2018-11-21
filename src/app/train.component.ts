@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from './api.service';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-}) 
-export class AppComponent implements OnInit {
+  selector: 'train-root',
+  templateUrl: './train.component.html',
+  styleUrls: ['./train.component.css']
+})
+export class TrainComponent implements OnInit {
 
   public ngOnInit() { }
   private _destroy$ = new Subject();
@@ -27,11 +26,10 @@ export class AppComponent implements OnInit {
 
   public recognised=false;
   public recognising=true;
-  public training=false;
-  // public captures: Array<any>;
-  
-  public constructor(private apiService: ApiService,private router: Router) {
-    // this.captures = [];
+  public captures: Array<any>;
+
+  public constructor(private apiService: ApiService) {
+    this.captures = [];
   }
 
   
@@ -41,8 +39,6 @@ export class AppComponent implements OnInit {
       navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
         this.video.nativeElement.srcObject = stream;
         this.video.nativeElement.play();
-        setTimeout(2000);
-        this.captureAndSearch();
 
       });
 
@@ -58,12 +54,13 @@ export class AppComponent implements OnInit {
   }
 
 
-  public async captureAndSearch() {
+  public async captureAndStore() {
     let response = null;
     console.log(this.canvas.nativeElement.getContext('2d'));
     do {
       this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
-      response = await this.apiService.searchForCapturedImage(this.canvas.nativeElement.toDataURL('image/png'));
+      this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
+     // response = await this.apiService.storeImageForTraining(this.canvas.nativeElement.toDataURL('image/png'));
       console.log('in capture response ::');
     } while (response.resp_code !== 'FR' && response.resp_code !== 'NR')
 
@@ -79,11 +76,6 @@ export class AppComponent implements OnInit {
     
   }
 
-  public goTrain(){
-    console.log("in go train-----------------------------------");
-    this.training=true;
-    this.router.navigate(['train']);
-  }
 
 
 }

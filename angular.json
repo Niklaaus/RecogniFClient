@@ -50,6 +50,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "sslKey": "recogni.key",
+            "sslCert":"recogni.crt",
             "browserTarget": "RecogniFClient:build"
           },
           "configurations": {
