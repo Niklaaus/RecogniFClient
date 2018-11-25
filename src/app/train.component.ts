@@ -21,18 +21,19 @@ export class TrainComponent implements OnInit {
 
   @ViewChild('canvas')
   public canvas: ElementRef;
-  
+
   public person_name: String;
 
-  public recognised=false;
-  public recognising=true;
+  public recognised = false;
+  public recognising = true;
   public captures: Array<any>;
+  public tname: String;
 
   public constructor(private apiService: ApiService) {
     this.captures = [];
   }
 
-  
+
 
   public ngAfterViewInit() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -51,29 +52,20 @@ export class TrainComponent implements OnInit {
     }
 
 
+
+
   }
 
 
   public async captureAndStore() {
     let response = null;
-    console.log(this.canvas.nativeElement.getContext('2d'));
-    do {
-      this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
-      this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
-     // response = await this.apiService.storeImageForTraining(this.canvas.nativeElement.toDataURL('image/png'));
-      console.log('in capture response ::');
-    } while (response.resp_code !== 'FR' && response.resp_code !== 'NR')
+    console.log("\n name is " + this.tname);
+    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
+    let imagestr = this.canvas.nativeElement.toDataURL("image/png");
+    this.captures.push(imagestr);
+    // response = await this.apiService.storeImageForTraining(this.canvas.nativeElement.toDataURL('image/png'),this.tname);  
+    // response = await this.apiService.storeImageForTraining(imagestr,this.tname);
 
-    this.person_name = response.person;
-    this.recognising=false;
-    if(response.resp_code === 'FR') {
-      this.recognised=true;
-    }
-    if(response.resp_code === 'NR') {
-      this.recognised=false;
-    }
-
-    
   }
 
 
