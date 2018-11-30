@@ -8,6 +8,7 @@ import { RecogComponent } from './recog.component';
 import { AsknameComponent } from './askname.component';
 import { routing } from './app.routing';
 import { APP_BASE_HREF } from '@angular/common';
+import { SharedService } from './shareddataservice';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { APP_BASE_HREF } from '@angular/common';
     BrowserModule,
     HttpClientModule, routing
   ],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' },SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

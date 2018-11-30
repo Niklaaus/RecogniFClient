@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from './api.service';
 import { Subject } from 'rxjs';
+import {SharedService} from './shareddataservice';
 
 
 @Component({
@@ -29,8 +30,9 @@ export class TrainComponent implements OnInit {
   public captures: Array<any>;
   public tname: String;
 
-  public constructor(private apiService: ApiService) {
+  public constructor(private apiService: ApiService,private dataservice:SharedService) {
     this.captures = [];
+    this.tname=this.dataservice.getName();
   }
 
 

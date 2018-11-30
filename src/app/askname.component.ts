@@ -1,7 +1,8 @@
-import { Component, OnInit, Output,EventEmitter,Input} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ApiService } from './api.service';
-import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import {SharedService} from './shareddataservice';
+
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AsknameComponent implements OnInit {
-public uname:String;
+
 
   public ngOnInit() { }
 
@@ -20,9 +21,7 @@ public uname:String;
 
 
 
-  @Input() result: string = "";
-  @Output() clicked = new EventEmitter<string>();
-  public constructor(private apiService: ApiService, private router: Router) {
+  public constructor(private apiService: ApiService, private router: Router, private dataservice:SharedService) {
 
   }
 
@@ -32,9 +31,10 @@ public uname:String;
 
 
   public stateName(uname) {
-
-    this.uname=uname;
     console.log(uname);
+
+    this.dataservice.saveName(uname);
+    
     this.router.navigate(['train']);
   }
 
