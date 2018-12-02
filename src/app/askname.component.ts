@@ -1,7 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
 import { Router } from '@angular/router';
-import {SharedService} from './shareddataservice';
+import { SharedService } from './shareddataservice';
 
 
 
@@ -12,6 +12,7 @@ import {SharedService} from './shareddataservice';
 })
 export class AsknameComponent implements OnInit {
 
+  public message:String;
 
   public ngOnInit() { }
 
@@ -21,7 +22,7 @@ export class AsknameComponent implements OnInit {
 
 
 
-  public constructor(private apiService: ApiService, private router: Router, private dataservice:SharedService) {
+  public constructor(private apiService: ApiService, private router: Router, private dataservice: SharedService) {
 
   }
 
@@ -34,8 +35,20 @@ export class AsknameComponent implements OnInit {
     console.log(uname);
 
     this.dataservice.saveName(uname);
+
+    let storeCreated = this.apiService.askName(uname);
+
+    storeCreated.subscribe(res => { 
+      console.log("Store created successfully")
+      this.router.navigate(['train']);
+    },
+      err => { 
+        this.message=err.error.message;
+        
+      })
+
+
     
-    this.router.navigate(['train']);
   }
 
 

@@ -49,18 +49,9 @@ export class ApiService {
 
   askName(name){
     
-    let promise = new Promise((resolve, reject) => {
-   
-      this.httpClient.post(`http://localhost:9090/train/askName/`, name)
-        .toPromise()
-        .then(
-          res => { // Success
-            console.log(res);
-            resolve(res);
-          }
-        )
-  });
-  return promise;
+     return this.httpClient.post(`http://localhost:9090/train/askName/`, name);
+        
+  return ;
 
   }
 
