@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  API_URL = 'http://localhost:8080';
+  API_URL = 'https://recognizr.xyz';
   constructor(private httpClient: HttpClient) { }
 
   searchForCapturedImage(image) {
