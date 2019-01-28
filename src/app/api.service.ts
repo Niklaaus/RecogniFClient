@@ -5,14 +5,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  API_URL = 'https://recognizr.xyz:8080';
+  API_URL = 'https://recognizr.xyz:5000';
   constructor(private httpClient: HttpClient) { }
 
   searchForCapturedImage(image) {
 
     let promise = new Promise((resolve, reject) => {
       setTimeout(()=>{
-        this.httpClient.post(`${this.API_URL}/search/`, image)
+        this.httpClient.post(`${this.API_URL}/search`, image)
           .toPromise()
           .then(
             res => { // Success
