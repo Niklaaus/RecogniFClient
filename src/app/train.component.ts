@@ -27,12 +27,11 @@ export class TrainComponent implements OnInit {
 
   public recognised = false;
   public recognising = true;
-  public captures: Array<any>;
+  public imageBase64: String;
   public tname: String;
 
   public constructor(private apiService: ApiService,private dataservice:SharedService) {
-    this.captures = [];
-    this.tname=this.dataservice.getName();
+      this.tname=this.dataservice.getName();
   }
 
 
@@ -63,10 +62,11 @@ export class TrainComponent implements OnInit {
     let response = null;
     console.log("\n name is " + this.tname);
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
-    let imagestr = this.canvas.nativeElement.toDataURL("image/png");
-    this.captures.push(imagestr);
+    this.imageBase64 = this.canvas.nativeElement.toDataURL("image/png");
+    
     // response = await this.apiService.storeImageForTraining(this.canvas.nativeElement.toDataURL('image/png'),this.tname);  
-    // response = await this.apiService.storeImageForTraining(imagestr,this.tname);
+    response = await this.apiService.storeImageForTraining(this.imageBase64,this.tname);
+    console.log(response);
 
   }
 

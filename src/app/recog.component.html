@@ -2,12 +2,16 @@
 <div id="recog">
 
     <div [hidden]="!recognising"><h2>Hola!! Trying to remember you...</h2></div>
-  <div [hidden]="recognising || !recognised"><h2>Hi {{person_name}}! Welcome back</h2></div>
-  <div [hidden]="recognising || recognised"><h2>Sorry!! Can't really remember you....</h2><br/>
-  <h4>Is it {{person_name}} by any chance?</h4>
+  <div [hidden]="!recognised"><h2>Hi {{person_name}}! Welcome back.</h2></div>
+  <div [hidden]="!celebrity_recognised"><h2>Whoa !!! {{person_name}}, is it you? .</h2></div>
+  <div [hidden]="!(not_really_recognised || celebrity_not_really_recognised)"><h2>Sorry!! Can't really remember you....</h2><br/>
+  <h4 [hidden]="!not_really_recognised">Is it {{person_name}} by any chance? If not, click on "Train me" and let me train...</h4>
+  <h4 [hidden]="!celebrity_not_really_recognised">Gotta tell you though; you look like {{person_name}} ...</h4>
   </div>
+  <h4 [hidden]="recognising || recognised || not_really_recognised || celebrity_recognised || celebrity_not_really_recognised">Can't say we have met before! Click on "Train me" and I'll remember you till the end of the world!</h4>
+  
   <div><video #video id="video" width="640" height="480" autoplay></video></div>
-  <div><button id="snap" (click)="captureAndSearch()">Snap Photo</button></div>
+  <!-- <div><button id="snap" (click)="captureAndSearch()">Snap Photo</button></div> -->
   <canvas #canvas id="canvas"  width="640" height="480" hidden ></canvas>
  <br/><br/>
 

@@ -1,15 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div id="training">
-  <h4>HI {{tname}}! Click a few photos and click train</h4>
+  <h4>HI {{tname}}! Click a proper photos of your face and click train</h4>
   
   <div><video #video id="video" width="64" height="48" autoplay></video></div>
   <div><button id="snap" (click)="captureAndStore()">Snap Photo</button></div>
   <canvas #canvas id="canvas"  width="640" height="480" hidden></canvas>
  
-  <ul>
-    <li *ngFor="let c of captures">
-        <img src="{{ c }}" height="50" />
-    </li>
-</ul>
+  
+        <img src="{{ c }}" height="100" />
+    
 
 </div>

@@ -35,17 +35,18 @@ export class AsknameComponent implements OnInit {
     console.log(uname);
 
     this.dataservice.saveName(uname);
+    this.router.navigate(['train']);
 
-    let storeCreated = this.apiService.askName(uname);
+    // let storeCreated = this.apiService.askName(uname);
 
-    storeCreated.subscribe(res => { 
-      console.log("Store created successfully")
-      this.router.navigate(['train']);
-    },
-      err => { 
-        this.message=err.error.message;
+    // storeCreated.subscribe(res => { 
+    //   console.log("Store created successfully")
+    //   this.router.navigate(['train']);
+    // },
+    //   err => { 
+    //     this.message=err.error.message;
         
-      })
+    //   })
 
 
     

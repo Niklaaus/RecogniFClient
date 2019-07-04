@@ -5,21 +5,20 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  API_URL = 'https://recognizr.xyz:5000';
+  API_URL = 'http://localhost:8080';
   constructor(private httpClient: HttpClient) { }
 
   searchForCapturedImage(image) {
 
     let promise = new Promise((resolve, reject) => {
-      setTimeout(()=>{
-        this.httpClient.post(`${this.API_URL}/search`, image)
+        this.httpClient.post(`/recognize`, image)
           .toPromise()
           .then(
             res => { // Success
               console.log(res);
               resolve(res);
             }
-          )}, 5000);
+          );
     });
     return promise;
 
@@ -28,12 +27,12 @@ export class ApiService {
 
   storeImageForTraining(image,name) {
 
-    let json={"image":image,
-              "name":name}
+    let json={"base64InputImage":image,
+              "personName":name}
 
     let promise = new Promise((resolve, reject) => {
    
-        this.httpClient.post(`http://localhost:9090/train/capture/`, json)
+        this.httpClient.post(`/add-face`, json)
           .toPromise()
           .then(
             res => { // Success

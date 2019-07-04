@@ -25,8 +25,12 @@ export class RecogComponent implements OnInit {
   
   public person_name: String;
 
-  public recognised=false;
   public recognising=true;
+
+  public recognised=false;
+  public celebrity_recognised=false;
+  public not_really_recognised=false;
+  public celebrity_not_really_recognised=false;
  
   // public captures: Array<any>;
   
@@ -41,7 +45,7 @@ export class RecogComponent implements OnInit {
       navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
         this.video.nativeElement.srcObject = stream;
         this.video.nativeElement.play();
-        setTimeout(2000);
+        //setTimeout(2000);
         this.captureAndSearch();
 
       });
@@ -64,16 +68,22 @@ export class RecogComponent implements OnInit {
     do {
       this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
       response = await this.apiService.searchForCapturedImage(this.canvas.nativeElement.toDataURL('image/png'));
-      console.log('in capture response ::');
-    } while (response.resp_code !== 'FR' && response.resp_code !== 'NR')
+      console.log('in capture response ::'+ response.resp_code);
+    } while (response.resp_code === 'NF')
 
     this.person_name = response.person;
     this.recognising=false;
     if(response.resp_code === 'FR') {
       this.recognised=true;
     }
-    if(response.resp_code === 'NR') {
-      this.recognised=false;
+    else if(response.resp_code === 'NR') {
+      this.not_really_recognised=true;
+    }
+    else if (response.resp_code === 'CelebFR' ){
+      this.celebrity_recognised=true;
+    
+    } else if(response.resp_code==='CelebNR'){
+      this.celebrity_not_really_recognised=true;
     }
 
     
