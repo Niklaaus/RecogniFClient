@@ -17,10 +17,10 @@ export class RecogComponent implements OnInit {
     this._destroy$.next();
   }
 
-  @ViewChild('video')
+  @ViewChild('video', { static: true })
   public video: ElementRef;
 
-  @ViewChild('canvas')
+  @ViewChild('canvas', { static: true })
   public canvas: ElementRef;
   
   public person_name: String;
